@@ -9,7 +9,7 @@ import { DataContext } from "./DataProvider/DataProvider";
 import {auth} from "../../Utility/firebase"
 
 const Header = () => {
-  const [state, dispatch] = useContext(DataContext)
+  const [state] = useContext(DataContext)
   console.log(state.basket.length)
   const totalItem = state.basket?.reduce((amount,item)=>{
     return item.amount + amount
