@@ -5,11 +5,10 @@ import LayOut from '../../Components/Header/LayOut/LayOut';
 import { db } from '../../Utility/firebase';
 import { useContext } from 'react';
 import { DataContext } from '../../Components/Header/DataProvider/DataProvider';
-import ProductCard from '../../Components/Header/Product/ProductCard'
 
 function Orders() {
   const location = useLocation();
-  const [{ user },dispatch] = useContext(DataContext);
+  const [{ user }] = useContext(DataContext);
   const [orders, setOrders] = useState([]);
   const msg = location.state?.msg;
 

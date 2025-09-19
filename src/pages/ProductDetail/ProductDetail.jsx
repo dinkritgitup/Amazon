@@ -23,7 +23,7 @@ function ProductDetail() {
       console.log(err)
       setIsLoading(false)
     })
-  },[])
+  },[productId])
 
   return (
     <LayOut>

@@ -17,7 +17,7 @@ function Auth() {
     signIn:false,
     signUp:false
   });
-  const [{ user }, dispatch] = useContext(DataContext);
+  const [, dispatch] = useContext(DataContext);
   const navigate = useNavigate()
   const navStateData = useLocation()
   console.log(navStateData);
@@ -25,7 +25,7 @@ function Auth() {
   const authHandler = async (e) => {
     e.preventDefault();
     console.log(e.target.name);
-    if (e.target.name == "signin") {
+    if (e.target.name === "signin") {
       setLoading({...loading, signIn:true})
       signInWithEmailAndPassword(auth, email, password)
         .then((userInfo) => {

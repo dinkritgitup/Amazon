@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { SlLocationPin } from "react-icons/sl";
-import { BsSearch, BsChevronDown } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { BiCart } from "react-icons/bi";
 import classes from "./Header.module.css";
@@ -74,7 +74,6 @@ const Header = () => {
                     <p>Hello, sign in</p>
                     <span>
                       Account & Lists
-                      {/*  <BsChevronDown size={12} /> */}
                     </span>
                   </>
                 )}
@@ -87,7 +86,6 @@ const Header = () => {
               <p>Returns</p>
               <span>
                 & Orders
-                {/* <BsChevronDown size={12} /> */}
               </span>
             </Link>
 

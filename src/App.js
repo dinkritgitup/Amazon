@@ -6,8 +6,8 @@ import {Type} from "./Utility/action.type"
 import {auth} from './Utility/firebase'
 
 function App() {
-   
-    const[{user},dispatch]= useContext(DataContext)
+
+    const[,dispatch]= useContext(DataContext)
       useEffect(() => {
         auth.onAuthStateChanged((authUser)=>{
           if(authUser){
@@ -23,7 +23,7 @@ function App() {
             });
           }
         })
-      }, []); 
+      }, [dispatch]); 
    
  return <Routing />;
 }

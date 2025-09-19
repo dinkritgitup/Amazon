@@ -9,7 +9,7 @@ import {Type} from '../../Utility/action.type'
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 function Cart() {
-  const [{basket,user},dispatch] =useContext(DataContext);
+  const [{basket},dispatch] =useContext(DataContext);
   const total=basket.reduce((amount,item)=>{
    return item.price *item.amount + amount
   },0)
@@ -25,7 +25,7 @@ function Cart() {
       id
     })
   }
-  
+
   return (
     <LayOut>
       <section className={classes.container}>
@@ -33,7 +33,7 @@ function Cart() {
           <h2>Hello</h2>
           <h3>Your shopping basket</h3>
           <hr />
-          {basket?.length == 0 ? (
+          {basket?.length === 0 ? (
             <p>Opps ! No item in your cart</p>
           ) : (
             basket?.map((item, i) => {
