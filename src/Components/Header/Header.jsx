@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { SlLocationPin } from "react-icons/sl";
 import { BsSearch, BsChevronDown } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { BiCart } from "react-icons/bi";
 import classes from "./Header.module.css";
 import LowerHeader from "./LowerHeader";
+import { DataContext } from "./DataProvider/DataProvider";
+import {auth} from "../../Utility/firebase"
 
 const Header = () => {
+  const [state, dispatch] = useContext(DataContext)
+  console.log(state.basket.length)
+  const totalItem = state.basket?.reduce((amount,item)=>{
+    return item.amount + amount
+  },0)
   return (
-    <>
+    <section className={classes.fixed}>
       <section>
         <div className={classes.header_container}>
           <div className={classes.logo_container}>
@@ -37,7 +44,7 @@ const Header = () => {
               <option value="">All</option>
             </select>
             <input type="text" placeholder="search product" />
-            <BsSearch size={25} />
+            <BsSearch size={38} />
           </div>
 
           {/* right side link */}
@@ -55,12 +62,25 @@ const Header = () => {
 
             {/* three components */}
 
-            <Link to="#">
-              <p>Hello, sign in</p>
-              <span>
-                Account & Lists
-                {/*  <BsChevronDown size={12} /> */}
-              </span>
+            <Link to={!state.user && "/auth"}>
+              <div>
+                {state.user ? (
+                  <>
+                    <p>Hello {state.user?.email?.split("@")[0]}</p>
+                    <span onClick={()=>auth.signOut()}>Sign Out</span>
+                  </>
+                ) : (
+                  <>
+                    <p>Hello, sign in</p>
+                    <span>
+                      Account & Lists
+                      {/*  <BsChevronDown size={12} /> */}
+                    </span>
+                  </>
+                )}
+              </div>
+
+      
             </Link>
             {/* orders */}
             <Link to="/orders">
@@ -75,13 +95,13 @@ const Header = () => {
             <Link to="/cart" className={classes.cart}>
               {/* icon */}
               <BiCart size={35} />
-              <span>0</span>
+              <span>{totalItem}</span>
             </Link>
           </div>
         </div>
       </section>
       <LowerHeader />
-    </>
+    </section>
   );
 };
 

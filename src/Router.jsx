@@ -1,20 +1,46 @@
 import React from 'react';
 import {BrowserRouter as Router, Routes,Route} from "react-router-dom";
 import Landing  from './pages/Landing/Landing';
-import SignIn from   './pages/Auth/SignUp'
+import Auth from   './pages/Auth/Auth'
 import Payment from './pages/Payment/Payment';
+import MinimalStripeExample from './pages/Payment/MinimalStripeExample';
 import Orders from './pages/Orders/Orders';
 import Cart from './pages/Cart/Cart'
 import Results from './pages/Results/Results'
+import ProductDetail from './pages/ProductDetail/ProductDetail';
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
+const stripePromise = loadStripe(
+  "pk_test_51S7waNJQjs7u7i9G2mhzFL23dOPx8DLoafYnBttIl8y3XsizCzDqWoyD49KHrqfC8B2L1aQKTsnfPe8GXSJjdK8A00NvkKASP3"
+);
 function Routering() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/auth" element={<SignIn />} />
-        <Route path="/payments" element={<Payment />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path='/category/:categoryName' element={<Results/>}/>
+        <Route path="/auth" element={<Auth />} />
+        <Route
+          path="/payments"
+          element={
+            <ProtectedRoute msg={"you must login in to pay"} redirect={"/payments"}>
+            <Elements stripe={stripePromise}>
+             
+              <Payment />
+            </Elements>
+            </ProtectedRoute>
+
+          }
+        />
+        <Route path="/orders" element={
+          <ProtectedRoute 
+          msg={"you must login in to access your orders"}
+           redirect={"/orders"}>
+          <Orders />
+          </ProtectedRoute>
+          } />
+        <Route path="/category/:categoryName" element={<Results />} />
+        <Route path="/products/:productId" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
       </Routes>
     </Router>
